@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dual-model-airlock"
+version = "2.0.0"
+description = "Sovereign Framework-Free IPC & REST Bridge Between Google Gemini, Claude Code CLI, Codex, and Aider."
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+  { name = "Trishula Software", url = "https://trishulasoftware.github.io" }
+]
+keywords = ["gemini", "claude-code", "ai-agents", "mcp", "ipc-bridge", "multi-agent", "autogen-alternative", "skill"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://trishulasoftware.github.io"
+Repository = "https://github.com/TrishulaSoftware/Dual-Model-Airlock"
+Documentation = "https://github.com/TrishulaSoftware/Dual-Model-Airlock#readme"
+
+[project.scripts]
+dual-model-airlock = "cli:main"
+
+[tool.setuptools]
+py-modules = ["airlock_core", "airlock_bridge", "airlock_server", "cli"]

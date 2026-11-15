@@ -1,0 +1,39 @@
+name: Dual-Model-Airlock CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  test-matrix:
+    name: Sovereign Airlock Suite (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Verify Zero External Dependencies & Syntax Compilation
+        run: |
+          python -m py_compile airlock_core.py airlock_bridge.py airlock_server.py cli.py test_airlock.py
+
+      - name: Run Unit, Security Perimeter & REST Integration Suite
+        run: |
+          python -m unittest discover -s . -p "test_*.py" -v
+
+      - name: Verify CLI Subcommands (workers & review)
+        run: |
+          python cli.py workers
+          python cli.py review airlock_core.py --worker mock
